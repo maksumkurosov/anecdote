@@ -34,7 +34,7 @@
                         </p>
                     </div>
                 <div class="clearfix">
-                    <a class="btn btn-success float-left" href="?action=confirm">Опублікувати</a>
+                    <a class="btn btn-success float-left" href="?action=confirm&id=<?php echo $anecdote['id']?>">Опублікувати</a>
                     <a class="btn btn-danger float-left" href="?action=cancel">Відхилити</a>
                 </div>
                 <?php endif;?>

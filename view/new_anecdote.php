@@ -22,12 +22,12 @@
         <div class="form-group">
             <label for="formGroupExampleInput">Тема</label>
 <!--            <input type="text" name="title" class="form-control" id="formGroupExampleInput">-->
-            <select id="department" name="department">
+            <select id="department" name="them">
                 <c:forEach var="item" items="${dept}">
-                    <option value="${item.key}">Тема 1</option>
-                    <option value="${item.key}">Тема 2</option>
-                    <option value="${item.key}">Тема 3</option>
-                    <option value="${item.key}">Тема 4</option>
+                    <option value="Them 1">Тема 1</option>
+                    <option value="Them 2">Тема 2</option>
+                    <option value="Them 3">Тема 3</option>
+                    <option value="Them 4">Тема 4</option>
                 </c:forEach>
             </select>
         </div>

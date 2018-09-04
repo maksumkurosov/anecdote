@@ -55,19 +55,19 @@ if (isset($_GET['page']) && $_GET['page']=='about') {
 if (isset($_GET['page']) && $_GET['page']=='check_posts') {
     require_once 'admin_cabinet.php';
 }
+
+if (isset($_GET['action']) && $_GET['action']=='confirm') {
+    $admin->confirmAnecdote($_GET['id']);
+}
+if (isset($_GET['action']) && $_GET['action']=='cancel') {
+    $admin->deleteAnecdote($_GET['id']);
+}
+
 if (isset($_GET['page']) && $_GET['page']=='post') {
     require_once 'post.php';
 }
 if (isset($_GET['page']) && $_GET['page']=='contact') {
     require_once 'contact.php';
-}
-
-if (isset($_GET['action']) && $_GET['action']=='confirm') {
-    $admin->confirmAnecdote(2);
-
-}
-if (isset($_GET['action']) && $_GET['action']=='cancel') {
-    $admin->deleteAnecdote(2);
 }
 
 if (isset($_POST['form_registration'])) {
@@ -96,4 +96,3 @@ if (isset($_POST['form_anecdote'])) {
 
 require_once 'parts/footer.php';
 require_once 'parts/scripts.php';
-

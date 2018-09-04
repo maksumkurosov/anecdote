@@ -64,6 +64,10 @@ if (isset($_GET['page']) && $_GET['page']=='contact') {
 
 if (isset($_GET['action']) && $_GET['action']=='confirm') {
     $admin->confirmAnecdote(2);
+
+}
+if (isset($_GET['action']) && $_GET['action']=='cancel') {
+    $admin->deleteAnecdote(2);
 }
 
 if (isset($_POST['form_registration'])) {

@@ -5,38 +5,16 @@ class Admin
     {
         $db = Db::getConnection();
 
-        $sql = "UPDATE anecdote
-            SET                
-                approved = :approved 
-                status = :status 
-            WHERE id = :id";
+        $sql = "UPDATE anecdote SET approved = 1 , status = 'posted' WHERE id = ".$id;
 
-        $yes = 1;
-        $status = 'posted';
-
-        $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':approved', $yes, PDO::PARAM_INT);
-        $result->bindParam(':status', $status, PDO::PARAM_STR);
-        return $result->execute();
+        return $db->query($sql);
     }
     public function deleteAnecdote($id)
     {
         $db = Db::getConnection();
 
-        $sql = "UPDATE anecdote
-            SET                
-                approved = :approved 
-                status = :status 
-            WHERE id = :id";
+        $sql = "UPDATE anecdote SET approved = 0, status = 'cancel' WHERE id = ".$id;
 
-        $yes = 0;
-        $status = 'cancel';
-
-        $result = $db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
-        $result->bindParam(':approved', $yes, PDO::PARAM_INT);
-        $result->bindParam(':status', $status, PDO::PARAM_STR);
-        return $result->execute();
+        return $db->query($sql);
     }
 }

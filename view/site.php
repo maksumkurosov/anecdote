@@ -29,7 +29,7 @@
                             </h3>
                         </a>
                         <p class="post-meta">Posted by
-                            <a class="text"><?php echo ucfirst($anecdote['user_name']) ?></a>
+                            <a class="text"><?php echo ucfirst($anecdote['login']) ?></a>
                                 on <?php echo $anecdote['date'] ?>
                         </p>
                     </div>
@@ -42,4 +42,3 @@
         </div>
     </div>
 </div>
-

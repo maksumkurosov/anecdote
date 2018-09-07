@@ -29,7 +29,7 @@
                             </h3>
                         </a>
                         <p class="post-meta">Posted by
-                            <a class="text"><?php echo ucfirst($anecdote['user_name']) ?></a>
+                            <a class="text"><?php echo ucfirst($anecdote['login']) ?></a>
                             on <?php echo $anecdote['date'] ?>
                         </p>
                     </div>
@@ -46,4 +46,46 @@
         </div>
     </div>
 </div>
-
+<div class="container">
+    <h1>Data Table</h1>
+    <table class="table table-striped table-bordered table-hover" id="table_test">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Them</th>
+                <th>Anecdote</th>
+                <th>Approved</th>
+                <th>Date</th>
+                <th>Title</th>
+                <th>User name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Id</th>
+                <th>Them</th>
+                <th>Anecdote</th>
+                <th>Approved</th>
+                <th>Date</th>
+                <th>Title</th>
+                <th>User name</th>
+                <th>Status</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        <?php foreach ($anecdoteList as $value) :?>
+            <tr>
+                <td><?php echo $value['id'] ?></td>
+                <td><?php echo $value['them'] ?></td>
+                <td><?php echo $value['anecdote'] ?></td>
+                <td><?php echo $value['approved'] ?></td>
+                <td><?php echo $value['date'] ?></td>
+                <td><?php echo $value['title'] ?></td>
+                <td><?php echo $value['user_id'] ?></td>
+                <td><?php echo $value['status'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

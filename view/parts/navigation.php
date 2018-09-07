@@ -41,17 +41,18 @@
                 <?php
                 if (isset($_SESSION['user'])) {echo
                     '<li class="nav-item">  
-                        <a class="nav-link">'.'You are:'.$_SESSION['user'].'</a>                      
+                        <a class="nav-link">'.'You are:'.$_SESSION['user']['name'].'</a>                      
                         
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="?page=exit">Exit</a>
+                            <a class="nav-link " href="?page=new_anecdote">Запропонувати анекдот</a>
                     </li>';
-                    echo '<li class="nav-item">
-                            <a class="nav-link text-success" href="?page=new_anecdote">Запропонувати анекдот</a>
-                        </li>';
+                    echo'<li class="nav-item">
+                            <a class="nav-link text-warning" href="?page=exit">Exit</a>
+                         </li>';
                 }
                 ?>
+
             </ul>
         </div>
     </div>

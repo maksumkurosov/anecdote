@@ -2,20 +2,15 @@
 
 class UserController
 {
-
-    public function test()
+    public static function setSessionUser($login,$id)
     {
-        return 'blabla';
-
-    }
-
-    public static function setSessionName($login)
-    {
-        $_SESSION['user'] = $login;
+        $_SESSION['user']['name'] = $login;
+        $_SESSION['user']['id'] = $id;
 
         header('Location:/');
 
     }
+
     public static function unsetSessionName()
     {
         unset($_SESSION['user']);
@@ -23,6 +18,7 @@ class UserController
         header('Location:/');
 
     }
+
     function page_redirect($location)
     {
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL='.$location.'">';
@@ -55,6 +51,15 @@ class UserController
         if (isset($_SESSION['user'])) {
             return User::getUserByName($name);
         }
+    }
+
+    public static function getUserById ($id)
+    {
+        return User::getLoginById($id);
+    }
+    public static function getUserIdByLogin ($login)
+    {
+        return User::getIdByLogin($login);
     }
 
 }

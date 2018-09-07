@@ -92,4 +92,32 @@ class User
 
         return $result->fetch();
     }
+    public static function getLoginById($id)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT login FROM user WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        return $result->fetch();
+    }
+    public static function getIdByLogin($login)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT id FROM user WHERE login = :login';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':login', $login, PDO::PARAM_STR);
+
+        //$result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $f = $result->fetch();
+        return $f['id'];
+    }
 }

@@ -16,14 +16,19 @@ spl_autoload_register(function ($class_name) {
 $user = new UserController();
 $anecdote = new AnecdoteController();
 $admin = new Admin();
+$total = $anecdote->getTotalAnecdotes();
+$page = 1;
+$pagination = new Pagination($total , $page ,5, 'page-');
 require_once 'parts/head.php';
 
 if (!isset($_GET['page'])) {
     $anecdoteList = $anecdote->getAnecdoteListForm();
     if (isset($_SESSION['user'])){
-        $userRole = $user::getUser($_SESSION['user']);
+        $userRole = $user::getUser($_SESSION['user']['name']);
+        //$userLogin =$user::getUserById($userRole['id']);
     }
     require_once 'site.php';
+
 }
 
 require_once 'parts/navigation.php';
@@ -31,8 +36,10 @@ require_once 'parts/navigation.php';
 if (isset($_GET['page']) && $_GET['page']=='check_posts') {
     $anecdoteList = $anecdote->getAnecdoteListForm();
     if (isset($_SESSION['user'])){
-        $userRole = $user::getUser($_SESSION['user']);
+        $userRole = $user::getUser($_SESSION['user']['name']);
+        //$userLogin =$user::getUserById($userRole['id']);
     }
+    $pagination->get();
     require_once 'admin_cabinet.php';
 }
 
@@ -56,30 +63,11 @@ if (isset($_GET['page']) && $_GET['page']=='check_posts') {
     require_once 'admin_cabinet.php';
 }
 
-if (isset($_GET['action']) && $_GET['action']=='confirm') {
-    $admin->confirmAnecdote($_GET['id']);
-}
-if (isset($_GET['action']) && $_GET['action']=='cancel') {
-    $admin->deleteAnecdote($_GET['id']);
-}
-
 if (isset($_GET['page']) && $_GET['page']=='post') {
     require_once 'post.php';
 }
 if (isset($_GET['page']) && $_GET['page']=='contact') {
     require_once 'contact.php';
-}
-
-if (isset($_POST['form_registration'])) {
-    $user::checkLoginExists($_POST['login'],$_POST['password']);
-}
-if (isset($_POST['form_login'])) {
-    $user::checkUserData($_POST['login'],$_POST['password']);
-    $user::setSessionName($_POST['login']);
-    //$user->page_redirect('index.php');
-
-//    echo "<meta http-equiv='refresh' content='0'>";
-//    header('Location: index.php');
 }
 if (isset($_GET['page']) && $_GET['page']=='exit') {
     $user::unsetSessionName();
@@ -89,6 +77,27 @@ if (isset($_GET['page']) && $_GET['page']=='exit') {
 if (isset($_GET['page']) && $_GET['page']=='new_anecdote'){
     require_once 'new_anecdote.php';
 }
+//--------------------------------------------------------
+if (isset($_GET['action']) && $_GET['action']=='confirm') {
+    $admin->confirmAnecdote($_GET['id']);
+}
+if (isset($_GET['action']) && $_GET['action']=='cancel') {
+    $admin->deleteAnecdote($_GET['id']);
+}
+
+if (isset($_POST['form_registration'])) {
+    $user::checkLoginExists($_POST['login'],$_POST['password']);
+}
+if (isset($_POST['form_login'])) {
+    $userID = $user::getUserIdByLogin($_POST['login']);
+    $user::checkUserData($_POST['login'],$_POST['password']);
+    $user::setSessionUser($_POST['login'],$userID);
+    //$user->page_redirect('index.php');
+
+//    echo "<meta http-equiv='refresh' content='0'>";
+//    header('Location: index.php');
+}
+
 if (isset($_POST['form_anecdote'])) {
     $anecdote->createAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
     echo 'Ваш запит додано';

@@ -6,9 +6,9 @@ class AnecdoteController extends Anecdote
         $this->createAnecdote($them,$title,$anecdote);
     }
 
-    public  function getAnecdoteListForm()
+    public  function getAnecdoteListForm($start_from,$record_per_page)
     {
-        return $this->getAnecdoteList();
+        return $this->getAnecdoteList($start_from,$record_per_page);
     }
     public  function getTotalAnecdotes()
     {

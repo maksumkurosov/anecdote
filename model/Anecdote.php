@@ -1,14 +1,29 @@
 <?php
 class Anecdote
 {
-    public function getAnecdoteList()
+//    public function getAnecdoteList()
+//    {
+//        $db = Db::getConnection();
+//        $result = $db->query('SELECT anecdote.*, user.login
+//        FROM anecdote
+//        INNER JOIN user ON anecdote.user_id = user.id');
+//        //'SELECT * FROM anecdote'
+//
+//        $advertisementList = array();
+//        while ($row = $result->fetch()) {
+//            $advertisementList[$row['id']] = $row;
+//        }
+//        return $advertisementList;
+//    }
+    public function getAnecdoteList($start_from,$record_per_page)
     {
         $db = Db::getConnection();
         $result = $db->query('SELECT anecdote.*, user.login
         FROM anecdote
-        INNER JOIN user ON anecdote.user_id = user.id');
+        INNER JOIN user ON anecdote.user_id = user.id
+        order by id ASC LIMIT '.$start_from.','.$record_per_page.' ');
         //'SELECT * FROM anecdote'
-
+//        $query = "SELECT * FROM tbl_student order by student_id DESC LIMIT $start_from, $record_per_page";
         $advertisementList = array();
         while ($row = $result->fetch()) {
             $advertisementList[$row['id']] = $row;

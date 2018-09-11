@@ -22,24 +22,24 @@ $pagination = new Pagination($total , $page ,5, 'page-');
 require_once 'parts/head.php';
 
 if (!isset($_GET['page'])) {
-    $anecdoteList = $anecdote->getAnecdoteListForm();
+    $anecdoteList = $anecdote->getAnecdoteListForm(0,5);
     if (isset($_SESSION['user'])){
         $userRole = $user::getUser($_SESSION['user']['name']);
         //$userLogin =$user::getUserById($userRole['id']);
     }
     require_once 'site.php';
+    echo $pagination->get();
 
 }
 
 require_once 'parts/navigation.php';
 
 if (isset($_GET['page']) && $_GET['page']=='check_posts') {
-    $anecdoteList = $anecdote->getAnecdoteListForm();
+    $anecdoteList = $anecdote->getAnecdoteListForm(0,5);
     if (isset($_SESSION['user'])){
         $userRole = $user::getUser($_SESSION['user']['name']);
         //$userLogin =$user::getUserById($userRole['id']);
     }
-    $pagination->get();
     require_once 'admin_cabinet.php';
 }
 
@@ -61,6 +61,7 @@ if (isset($_GET['page']) && $_GET['page']=='about') {
 }
 if (isset($_GET['page']) && $_GET['page']=='check_posts') {
     require_once 'admin_cabinet.php';
+    echo $pagination->get();
 }
 
 if (isset($_GET['page']) && $_GET['page']=='post') {

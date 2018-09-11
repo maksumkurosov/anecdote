@@ -19,7 +19,7 @@ class Pagination
      * @var Ключ для GET, в который пишется номер страницы
      * 
      */
-    private $index = 'page';
+    private $index = 'number_page';
 
     /**
      * 
@@ -125,7 +125,7 @@ class Pagination
             $text = $page;
 
         $currentURI = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
-        $currentURI = preg_replace('~/page-[0-9]+~', '', $currentURI);
+        $currentURI = preg_replace('~/number_page-[0-9]+~', '', $currentURI);
         # Формируем HTML код ссылки и возвращаем
         return
                 '<li><a href="' . $currentURI . $this->index . $page . '">' . $text . '</a></li>';

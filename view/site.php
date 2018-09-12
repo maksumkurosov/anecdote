@@ -25,7 +25,15 @@
                                 <?php echo $anecdote['title'] ?>
                             </h2>
                             <h3 class="post-subtitle">
-                                <?php echo mb_strimwidth($anecdote['anecdote'], 0, 60, "..."); ?>
+                                <?php
+                                if (strlen($anecdote['anecdote'])<60){
+                                    echo $anecdote['anecdote'];
+                                } else {
+                                    $pos = strpos($anecdote['anecdote'], ' ', 60);
+//                                    echo substr($anecdote['anecdote'],0,$pos).'...';
+                                    echo mb_strimwidth($anecdote['anecdote'], 0, $pos+3, "...");
+                                }
+                                    ?>
                             </h3>
                         </a>
                         <p class="post-meta">Posted by

@@ -65,7 +65,6 @@ if(isset($_GET['page']) && $_GET['page']=='about') {
 
 if(isset($_GET['page']) && $_GET['page']=='check_posts') {
     require_once 'admin_cabinet.php';
-    echo $pagination->get();
 }
 
 if(isset($_GET['page']) && $_GET['page']=='post') {
@@ -85,9 +84,11 @@ if(isset($_GET['page']) && $_GET['page']=='new_anecdote'){
 //--------------------------------------------------------
 if(isset($_GET['action']) && $_GET['action']=='confirm') {
     $admin->confirmAnecdote($_GET['id']);
+    $user->page_redirect('?page=check_posts');
 }
 if(isset($_GET['action']) && $_GET['action']=='cancel') {
     $admin->deleteAnecdote($_GET['id']);
+    $user->page_redirect('?page=check_posts');
 }
 
 if(isset($_POST['form_registration'])) {

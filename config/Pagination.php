@@ -80,12 +80,12 @@ class Pagination
         # Получаем ограничения для цикла
         $limits = $this->limits();
 
-        $html = '<ul class="pagination">';
+        $html = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
         # Генерируем ссылки
         for ($page = $limits[0]; $page <= $limits[1]; $page++) {
             # Если текущая это текущая страница, ссылки нет и добавляется класс active
             if ($page == $this->current_page) {
-                $links .= '<li class="active"><a href="#">' . $page . '</a></li>';
+                $links .= '<li class="page-item"><a class="page-link" href="?page_number = 1">' . $page . '</a></li>';
             } else {
                 # Иначе генерируем ссылку
                 $links .= $this->generateHtml($page);
@@ -105,7 +105,7 @@ class Pagination
                 $links .= $this->generateHtml($this->amount, '&gt;');
         }
 
-        $html .= $links . '</ul>';
+        $html .= $links . '</ul></nav>';
 
         # Возвращаем html
         return $html;
@@ -128,7 +128,8 @@ class Pagination
         $currentURI = preg_replace('~/number_page-[0-9]+~', '', $currentURI);
         # Формируем HTML код ссылки и возвращаем
         return
-                '<li><a href="' . $currentURI . $this->index . $page . '">' . $text . '</a></li>';
+                //'<li><a href="' . $currentURI . $this->index . $page . '">' . $text . '</a></li>';
+                '<li class="page-item"><a class="page-link" href="' . $this->index . $page . '">' . $text . '</a></li>';
     }
 
     /**
@@ -190,7 +191,7 @@ class Pagination
     private function amount()
     {
         # Делим и возвращаем
-        return round($this->total / $this->limit);
+        return ceil($this->total / $this->limit);
     }
 
 }

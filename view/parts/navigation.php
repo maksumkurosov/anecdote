@@ -14,16 +14,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="?page=about">About</a>
                 </li>
-                <?php if (empty($_GET)) :?>
-                    <?php if (isset($_SESSION['user'])) :?>
-                         <?php if ($userRole['is_admin']) :?>
+
+                    <?php if (isset($_SESSION['user']['name'])) :?>
+                         <?php if ($_SESSION['user']['is_admin']) :?>
                             <li class="nav-item">
     <!--                            <a class="nav-link" href="/view/admin_cabinet.php">Check posts</a>-->
                                 <a class="nav-link" href="?page=check_posts">Check posts</a>
                             </li>
                          <?php endif; ?>
                     <?php endif; ?>
-                <?php endif; ?>
+
 
                 <li class="nav-item">
                     <a class="nav-link" href="?page=contact">Contact</a>

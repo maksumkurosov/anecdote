@@ -18,88 +18,88 @@ $anecdote = new AnecdoteController();
 $admin = new Admin();
 $total = $anecdote->getTotalAnecdotes();
 $page = 1;
-$pagination = new Pagination($total , $page ,5, 'page-');
+$limit = 5;
+$pagination = new Pagination($total , $page ,$limit, '?page_number=');
 require_once 'parts/head.php';
 
-if (!isset($_GET['page'])) {
-    $anecdoteList = $anecdote->getAnecdoteListForm(0,5);
-    if (isset($_SESSION['user'])){
+if(!isset($_GET['page'])) {
+    if (!isset($_GET['page_number'])||$_GET['page_number']==1){
+//        $approvedList = $anecdote->getApprovedAnecdotes();
+        $anecdoteList = $anecdote->getAnecdoteListForm(0, $limit);
+    } else{
+        $anecdoteList = $anecdote->getAnecdoteListForm($_GET['page_number']*$limit-$limit, $limit);
+    }
+    if (isset($_SESSION['user'])) {
         $userRole = $user::getUser($_SESSION['user']['name']);
-        //$userLogin =$user::getUserById($userRole['id']);
     }
     require_once 'site.php';
     echo $pagination->get();
-
 }
 
 require_once 'parts/navigation.php';
 
-if (isset($_GET['page']) && $_GET['page']=='check_posts') {
-    $anecdoteList = $anecdote->getAnecdoteListForm(0,5);
+if(isset($_GET['page']) && $_GET['page']=='check_posts') {
+    $anecdoteList = $anecdote->getAnecdoteListAdmin();
     if (isset($_SESSION['user'])){
         $userRole = $user::getUser($_SESSION['user']['name']);
-        //$userLogin =$user::getUserById($userRole['id']);
     }
     require_once 'admin_cabinet.php';
 }
 
-if (isset($_GET['page']) && $_GET['page']=='login') {
+if(isset($_GET['page']) && $_GET['page']=='anecdote') {
+    $currentAnecdote = $anecdote->getCurrentAnecdote($_GET['id']);
+    $log = $user::getUserById($currentAnecdote['user_id']);
+    require_once 'current_anecdote.php';
+}
+if(isset($_GET['page']) && $_GET['page']=='login') {
     require_once 'auth/login.php';
 }
 
-if (isset($_GET['page']) && $_GET['page']=='registration') {
+if(isset($_GET['page']) && $_GET['page']=='registration') {
     require_once 'auth/registration.php';
 }
 
-//if (isset($_GET['page']) && $_GET['page']=='site') {
-//    $anecdoteList = $anecdote->getAnecdoteListForm();
-//    require_once 'site.php';
-//    //var_dump($anecdoteList);
-//}
-if (isset($_GET['page']) && $_GET['page']=='about') {
+if(isset($_GET['page']) && $_GET['page']=='about') {
     require_once 'about.php';
 }
-if (isset($_GET['page']) && $_GET['page']=='check_posts') {
+
+if(isset($_GET['page']) && $_GET['page']=='check_posts') {
     require_once 'admin_cabinet.php';
     echo $pagination->get();
 }
 
-if (isset($_GET['page']) && $_GET['page']=='post') {
+if(isset($_GET['page']) && $_GET['page']=='post') {
     require_once 'post.php';
 }
-if (isset($_GET['page']) && $_GET['page']=='contact') {
+
+if(isset($_GET['page']) && $_GET['page']=='contact') {
     require_once 'contact.php';
 }
-if (isset($_GET['page']) && $_GET['page']=='exit') {
-    $user::unsetSessionName();
-    //$user->page_redirect('index.php');
 
+if(isset($_GET['page']) && $_GET['page']=='exit') {
+    $user::unsetSessionName();
 }
-if (isset($_GET['page']) && $_GET['page']=='new_anecdote'){
+if(isset($_GET['page']) && $_GET['page']=='new_anecdote'){
     require_once 'new_anecdote.php';
 }
 //--------------------------------------------------------
-if (isset($_GET['action']) && $_GET['action']=='confirm') {
+if(isset($_GET['action']) && $_GET['action']=='confirm') {
     $admin->confirmAnecdote($_GET['id']);
 }
-if (isset($_GET['action']) && $_GET['action']=='cancel') {
+if(isset($_GET['action']) && $_GET['action']=='cancel') {
     $admin->deleteAnecdote($_GET['id']);
 }
 
-if (isset($_POST['form_registration'])) {
+if(isset($_POST['form_registration'])) {
     $user::checkLoginExists($_POST['login'],$_POST['password']);
 }
-if (isset($_POST['form_login'])) {
-    $userID = $user::getUserIdByLogin($_POST['login']);
-    $user::checkUserData($_POST['login'],$_POST['password']);
-    $user::setSessionUser($_POST['login'],$userID);
-    //$user->page_redirect('index.php');
-
-//    echo "<meta http-equiv='refresh' content='0'>";
-//    header('Location: index.php');
+if(isset($_POST['form_login'])) {
+    //$userID = $user::getUserIdByLogin($_POST['login']);
+    $arrayUser = $user::checkUserData($_POST['login'],$_POST['password']);
+    $user::setSessionUser($arrayUser['login'],$arrayUser['id'],$arrayUser['is_admin']);
 }
 
-if (isset($_POST['form_anecdote'])) {
+if(isset($_POST['form_anecdote'])) {
     $anecdote->createAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
     echo 'Ваш запит додано';
 }

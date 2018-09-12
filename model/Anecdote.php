@@ -15,13 +15,42 @@ class Anecdote
 //        }
 //        return $advertisementList;
 //    }
+//    public function getAllAnecdotes()
+//    {
+//        $db = Db::getConnection();
+//        $result = $db->query("SELECT anecdote.*, user.login
+//        FROM anecdote
+//        INNER JOIN user ON anecdote.user_id = user.id
+//        WHERE status = 'posted'");
+//
+//        $advertisementList = array();
+//        while ($row = $result->fetch()) {
+//            $advertisementList[$row['id']] = $row;
+//        }
+//        return $advertisementList;
+//    }
     public function getAnecdoteList($start_from,$record_per_page)
+    {
+        $db = Db::getConnection();
+        $result = $db->query("SELECT anecdote.*, user.login
+        FROM anecdote
+        INNER JOIN user ON anecdote.user_id = user.id
+        WHERE status = 'posted'
+        order by id ASC LIMIT $start_from,$record_per_page ");
+
+//        $query = "SELECT * FROM tbl_student order by student_id DESC LIMIT $start_from, $record_per_page";
+        $advertisementList = array();
+        while ($row = $result->fetch()) {
+            $advertisementList[$row['id']] = $row;
+        }
+        return $advertisementList;
+    }
+    public function getAnecdoteListAdmin()
     {
         $db = Db::getConnection();
         $result = $db->query('SELECT anecdote.*, user.login
         FROM anecdote
-        INNER JOIN user ON anecdote.user_id = user.id
-        order by id ASC LIMIT '.$start_from.','.$record_per_page.' ');
+        INNER JOIN user ON anecdote.user_id = user.id') ;
         //'SELECT * FROM anecdote'
 //        $query = "SELECT * FROM tbl_student order by student_id DESC LIMIT $start_from, $record_per_page";
         $advertisementList = array();
@@ -85,7 +114,7 @@ class Anecdote
         $db = Db::getConnection();
 
         // Текст запроса к БД
-        $sql = 'SELECT count(id) AS count FROM anecdote ';
+        $sql = "SELECT count(id) AS count FROM anecdote WHERE status = 'posted'";
 
         // Используется подготовленный запрос
         $result = $db->prepare($sql);

@@ -2,10 +2,11 @@
 
 class UserController
 {
-    public static function setSessionUser($login,$id)
+    public static function setSessionUser($login,$id,$admin)
     {
         $_SESSION['user']['name'] = $login;
         $_SESSION['user']['id'] = $id;
+        $_SESSION['user']['is_admin'] = $admin;
 
         header('Location:/');
 
@@ -28,7 +29,7 @@ class UserController
     {
         if(User::checkUserData($login,$password)) {
           echo 'Ви залогінилися!';
-          return true;
+          return User::checkUserData($login,$password);
         } else {
             echo 'Неправельний логін або пароль';
             return false;

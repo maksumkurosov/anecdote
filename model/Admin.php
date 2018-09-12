@@ -5,7 +5,7 @@ class Admin
     {
         $db = Db::getConnection();
 
-        $sql = "UPDATE anecdote SET approved = 1 , status = 'posted' WHERE id = ".$id;
+        $sql = "UPDATE anecdote SET status = 'posted' WHERE id = ".$id;
 
         return $db->query($sql);
     }
@@ -13,7 +13,7 @@ class Admin
     {
         $db = Db::getConnection();
 
-        $sql = "UPDATE anecdote SET approved = 0, status = 'cancel' WHERE id = ".$id;
+        $sql = "UPDATE anecdote SET status = 'cancel' WHERE id = ".$id;
 
         return $db->query($sql);
     }

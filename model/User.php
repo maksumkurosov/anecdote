@@ -29,7 +29,7 @@ class User
         $user = $result->fetch();
 
         if ($user) {
-            return $user['id'];
+            return $user;
         }
         return false;
     }

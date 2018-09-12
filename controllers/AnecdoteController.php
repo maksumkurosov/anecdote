@@ -10,6 +10,10 @@ class AnecdoteController extends Anecdote
     {
         return $this->getAnecdoteList($start_from,$record_per_page);
     }
+//    public  function getApprovedAnecdotes()
+//    {
+//        return $this->getAllAnecdotes();
+//    }
     public  function getTotalAnecdotes()
     {
         return $this->getTotalAnecdote();

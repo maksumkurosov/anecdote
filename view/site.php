@@ -18,14 +18,14 @@
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             <?php foreach ($anecdoteList as $anecdote) :?>
-                <?php if ($anecdote['approved']==1):?>
+                <?php if ($anecdote['status']=='posted'):?>
                     <div class="post-preview">
-                        <a href="/post.php">
+                        <a href="?page=anecdote&id=<?php echo $anecdote['id'] ?>">
                             <h2 class="post-title">
                                 <?php echo $anecdote['title'] ?>
                             </h2>
                             <h3 class="post-subtitle">
-                                <?php echo $anecdote['anecdote'] ?>
+                                <?php echo mb_strimwidth($anecdote['anecdote'], 0, 60, "..."); ?>
                             </h3>
                         </a>
                         <p class="post-meta">Posted by
@@ -35,10 +35,6 @@
                     </div>
                 <?php endif;?>
             <?php endforeach; ?>
-            <!-- Pager -->
-            <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-            </div>
         </div>
     </div>
 </div>

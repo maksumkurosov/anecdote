@@ -1,3 +1,16 @@
+<style>
+    .one_news span {
+        border: 1px dotted;
+        cursor: pointer;
+        display: block;
+        margin-bottom: 5px;
+        text-align: center;
+        width: 85px;
+    }
+    .one_news span:hover{
+        border: 1px solid;
+    }
+</style>
 <body>
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('/view/img/home-bg.jpg')">
@@ -34,6 +47,8 @@
                                     echo mb_strimwidth($anecdote['anecdote'], 0, $pos+3, "...");
                                 }
                                     ?>
+                                <input type="hidden" id="user_id" value="<?=$_SESSION['user']['id'];?>" />
+                                <input type="hidden" id="anecdote_id" value="<?php echo $anecdote['id'];?>" />
                             </h3>
                         </a>
                         <p class="post-meta">Posted by
@@ -41,6 +56,7 @@
                                 on <?php echo $anecdote['date'] ?>
                         </p>
                     </div>
+                    <div class="like" data-id="<?php echo $anecdote['id']?>"><span class="counter" id="like"><b><?php echo $anecdote['count_like'] ?></b></span></div>
                 <?php endif;?>
             <?php endforeach; ?>
         </div>

@@ -51,11 +51,17 @@ console.log (anecdote_id);
                 // в случае, когда пришло success. Отработало без ошибок
                 if(data.result == 'success'){
                     // Выводим сообщение
-                    alert('Голос засчитан');
+                    // alert('Голос засчитан');
                     // увеличим визуальный счетчик
                     var count = parseInt(element.find('b').html());
                     element.find('b').html(count+1);
-                }else{
+                }else if(data.result == 'dislike'){
+                    // Выводим сообщение
+                    // alert('Голос засчитан');
+                    // увеличим визуальный счетчик
+                    var count = parseInt(element.find('b').html());
+                    element.find('b').html(count-1);
+                } else{
                     // вывод сообщения об ошибке
                     alert(data.msg);
                 }
@@ -86,7 +92,7 @@ console.log (anecdote_id);
 <!--        });-->
 <!--    });-->
 <!--</script>-->
-//------------------------------
+<!--//-------------------------------->
 <!--<script>-->
 <!--    $('.select-categories li').click(function(){-->
 <!--        var cat_id = $(this).attr("data-id");-->

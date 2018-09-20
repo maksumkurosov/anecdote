@@ -19,7 +19,19 @@ $qwerty = $result->fetch(PDO::FETCH_ASSOC);
 // если что-то пришло из запроса, значит уже голосовал
 //var_dump($result);exit;
 if($qwerty['count(*)'] > 0){
-$error = 'Вы уже голосовали';
+    if ($type == 'like') $fieldName = 'count_like';
+// делаем запись о том, что пользователь проголосовал
+    $deleteLike = "DELETE FROM `likes` WHERE user_id=$userId AND anecdote_id = $anecdoteId";
+    $result = $db->prepare($deleteLike);
+    $result->execute();
+    $qwerty = $result->fetch();
+
+// делаем запись для новости - увеличиваем количесво голосов(лайк или дизлайк)
+    $deleteCount = "UPDATE `anecdote`.`anecdote` SET `$fieldName`= `$fieldName` - 1 WHERE  `id` = $anecdoteId";
+    $result = $db->prepare($deleteCount);
+    $result->execute();
+    $qwerty = $result->fetch();
+    echo json_encode(array('result' => 'dislike'));
 }else { // если пользователь не голосовал, проголосуем
 
     if (!$error) {// получем поле для голосования - лайк или дизлайк
@@ -35,13 +47,15 @@ $error = 'Вы уже голосовали';
         $result = $db->prepare($addCount);
         $result->execute();
         $qwerty = $result->fetch();
+        echo json_encode(array('result' => 'success'));
     }
 }
 // делаем ответ для клиента
     if ($error) {
 // если есть ошибки то отправляем ошибку и ее текст
         echo json_encode(array('result' => 'error', 'msg' => $error));
-    } else {
-// если нет ошибок сообщаем об успехе
-        echo json_encode(array('result' => 'success'));
     }
+//    } else {
+//// если нет ошибок сообщаем об успехе
+//        echo json_encode(array('result' => 'success'));
+//    }

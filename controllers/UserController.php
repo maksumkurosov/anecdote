@@ -62,5 +62,9 @@ class UserController
     {
         return User::getIdByLogin($login);
     }
+    public static function getUserLike ($user_id)
+    {
+        return User::getUserLikes($user_id);
+    }
 
 }

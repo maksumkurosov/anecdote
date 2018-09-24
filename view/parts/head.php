@@ -23,4 +23,5 @@
     <link href="view/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="view/assets/css/dropdown.css"  rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/view/assets/datatables.min.css">
+    <link rel="stylesheet" href="/view/assets/fontawesome/css/font-awesome.min.css">
 </head>

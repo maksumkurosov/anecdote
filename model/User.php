@@ -120,4 +120,21 @@ class User
         $f = $result->fetch();
         return $f['id'];
     }
+    public static function getUserLikes($user_id)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT * FROM likes WHERE user_id = :user_id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        $likeList = array();
+        while ($row = $result->fetch()) {
+            $likeList[$row['id']] = $row;
+        }
+        return $likeList;
+    }
 }

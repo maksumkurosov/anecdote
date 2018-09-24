@@ -54,6 +54,7 @@
                 <td>
                     <a href="?action=confirm&id=<?php echo $value['id']?>">Опублікувати</a>
                     <a href="?action=cancel&id=<?php echo $value['id']?>">Відхилити</a>
+                    <a href="?action=delete&id=<?php echo $value['id']?>">Видалити</a>
                 </td>
             </tr>
         <?php endforeach; ?>

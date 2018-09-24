@@ -34,6 +34,7 @@ if(!isset($_GET['page'])) {
     }
     require_once 'site.php';
     echo $pagination->get();
+
 }
 
 require_once 'parts/navigation.php';
@@ -87,6 +88,10 @@ if(isset($_GET['action']) && $_GET['action']=='confirm') {
     $user->page_redirect('?page=check_posts');
 }
 if(isset($_GET['action']) && $_GET['action']=='cancel') {
+    $admin->cancelAnecdote($_GET['id']);
+    $user->page_redirect('?page=check_posts');
+}
+if(isset($_GET['action']) && $_GET['action']=='delete') {
     $admin->deleteAnecdote($_GET['id']);
     $user->page_redirect('?page=check_posts');
 }

@@ -1,41 +1,41 @@
-<style>
-.like{
-cursor:pointer;
-width:128px;
-height:128px;
-margin:10px auto 40px;
-position:relative;
-}
-.like:hover.active, .like{
-background: url('/view/img/like.png') no-repeat;
-}
-.like.active, .like:hover{
-background: url('/view/img/like_active.png') no-repeat;
-}
-.like .counter{
-border: 5px solid #333333;
-bottom: -37px;
-color: #333333;
-font-size: 31px;
-left: 27px;
-position: absolute;
-text-align: center;
-width: 64px;
-}
-</style>
-<style>
-    .one_news span {
-        border: 1px dotted;
-        cursor: pointer;
-        display: block;
-        margin-bottom: 5px;
-        text-align: center;
-        width: 85px;
-    }
-    .one_news span:hover{
-        border: 1px solid;
-    }
-</style>
+<!--<style>-->
+<!--.like{-->
+<!--cursor:pointer;-->
+<!--width:128px;-->
+<!--height:128px;-->
+<!--margin:10px auto 40px;-->
+<!--position:relative;-->
+<!--}-->
+<!--.like:hover.active, .like{-->
+<!--background: url('/view/img/like.png') no-repeat;-->
+<!--}-->
+<!--.like.active, .like:hover{-->
+<!--background: url('/view/img/like_active.png') no-repeat;-->
+<!--}-->
+<!--.like .counter{-->
+<!--border: 5px solid #333333;-->
+<!--bottom: -37px;-->
+<!--color: #333333;-->
+<!--font-size: 31px;-->
+<!--left: 27px;-->
+<!--position: absolute;-->
+<!--text-align: center;-->
+<!--width: 64px;-->
+<!--}-->
+<!--</style>-->
+<!--<style>-->
+<!--    .one_news span {-->
+<!--        border: 1px dotted;-->
+<!--        cursor: pointer;-->
+<!--        display: block;-->
+<!--        margin-bottom: 5px;-->
+<!--        text-align: center;-->
+<!--        width: 85px;-->
+<!--    }-->
+<!--    .one_news span:hover{-->
+<!--        border: 1px solid;-->
+<!--    }-->
+<!--</style>-->
 <body>
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('/view/img/home-bg.jpg')">
@@ -81,7 +81,12 @@ width: 64px;
                                 on <?php echo $anecdote['date'] ?>
                         </p>
                     </div>
-                    <div class="like" data-id="<?php echo $anecdote['id']?>"><span class="counter" id="like"><b><?php echo $anecdote['count_like'] ?></b></span></div>
+                    <div class="like" data-id="<?php echo $anecdote['id']?>">
+                        <span class="counter" id="like">
+                            <i class="fa fas fa-thumbs-up "></i>
+                            <b><?php echo $anecdote['count_like'] ?></b>
+                        </span>
+                    </div>
                 <?php endif;?>
             <?php endforeach; ?>
         </div>

@@ -31,8 +31,6 @@
         var user_id = $('#user_id').val();
         // var anecdote_id = this. $('#anecdote_id').val();
         var anecdote_id = element.parent().data('id');
-console.log (user_id);
-console.log (anecdote_id);
         $.ajax({
             // метод отправки
             type: "POST",

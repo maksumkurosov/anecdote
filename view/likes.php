@@ -7,7 +7,7 @@ $userId = (int) $_POST['user_id'];
 $anecdoteId = (int) $_POST['anecdote_id'];
 $type = $_POST['type'];
 
-if (isset($_SESSION['user'])) {
+if (true) {
 // проверяем, голосовал ранее пользователь за эту новость или нет
     $sql = "SELECT count(*) FROM `likes` WHERE `user_id` = $userId AND `anecdote_id` = $anecdoteId";
     $result = $db->prepare($sql);

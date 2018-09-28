@@ -102,12 +102,30 @@ if(isset($_POST['form_registration'])) {
 if(isset($_POST['form_login'])) {
     //$userID = $user::getUserIdByLogin($_POST['login']);
     $arrayUser = $user::checkUserData($_POST['login'],$_POST['password']);
-    $user::setSessionUser($arrayUser['login'],$arrayUser['id'],$arrayUser['is_admin']);
+    if($arrayUser != false){
+        $user::setSessionUser($arrayUser['login'],$arrayUser['id'],$arrayUser['is_admin']);
+    }
 }
 
 if(isset($_POST['form_anecdote'])) {
-    $anecdote->createAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
-    echo 'Ваш запит додано';
+    $list = $anecdote->getLastAnecdote($_SESSION['user']['id']);
+
+    $date = new DateTime($list['date']);
+    $date->add(new DateInterval('PT5M'));
+    $date = date_format($date,"Y-m-d H:i:s");
+
+    $now = new DateTime();
+    $now = date("Y-m-d H:i:s");
+
+    //var_dump($date);
+    //var_dump($now);
+
+    if(strtotime($date)<strtotime($now)){
+        $anecdote->createAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
+        echo 'Ваш запит додано';
+    } else {
+        echo 'Анекдот можна ддавати кожних 5 хвилин';
+    }
 }
 
 require_once 'parts/footer.php';

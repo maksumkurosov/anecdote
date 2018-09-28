@@ -72,6 +72,26 @@ class Anecdote
 //        return $advertisementList;
 //    }
 
+    public function getLastUserAnecdote($userId)
+    {
+        $db = Db::getConnection();
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM anecdote WHERE user_id = :id ORDER BY date DESC';
+
+        // Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $userId, PDO::PARAM_INT);
+
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Выполняем запрос
+        $result->execute();
+
+        // Возвращаем данные
+        return $result->fetch();
+    }
+
 
     public function getCurrentAnecdote($id)
     {

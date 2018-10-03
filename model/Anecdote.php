@@ -29,7 +29,7 @@ class Anecdote
 //        }
 //        return $advertisementList;
 //    }
-    public function getAnecdoteList($start_from,$record_per_page)
+    public static function getAnecdoteList($start_from,$record_per_page)
     {
         $db = Db::getConnection();
         $result = $db->query("SELECT anecdote.*, user.login
@@ -45,7 +45,7 @@ class Anecdote
         }
         return $advertisementList;
     }
-    public function getAnecdoteListAdmin()
+    public static function getAnecdoteListAdmin()
     {
         $db = Db::getConnection();
         $result = $db->query('SELECT anecdote.*, user.login
@@ -72,7 +72,7 @@ class Anecdote
 //        return $advertisementList;
 //    }
 
-    public function getLastUserAnecdote($userId)
+    public static function getLastUserAnecdote($userId)
     {
         $db = Db::getConnection();
         // Текст запроса к БД
@@ -93,7 +93,7 @@ class Anecdote
     }
 
 
-    public function getCurrentAnecdote($id)
+    public static function getCurrentAnecdote($id)
     {
         $db = Db::getConnection();
         // Текст запроса к БД
@@ -113,7 +113,7 @@ class Anecdote
         return $result->fetch();
     }
 
-    public function createAnecdote($them,$title,$anecdote)
+    public static function createAnecdote($them,$title,$anecdote)
     {
         $db = Db::getConnection();
 
@@ -146,6 +146,16 @@ class Anecdote
         // Возвращаем значение count - количество
         $row = $result->fetch();
         return $row['count'];
+    }
+
+    public static function addToTop($idAnecdote)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'INSERT INTO top (id_anecdote) VALUES (:id_anecdote)';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id_anecdote', $idAnecdote, PDO::PARAM_INT);
+        return $result->execute();
     }
 
 }

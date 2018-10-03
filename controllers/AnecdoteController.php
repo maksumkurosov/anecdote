@@ -1,26 +1,42 @@
 <?php
-class AnecdoteController extends Anecdote
+class AnecdoteController
 {
-    public  function actionCreateAnecdote($them,$title,$anecdote) {
+    public static function actionCreateAnecdote($them,$title,$anecdote) {
 
-        $this->createAnecdote($them,$title,$anecdote);
+        Anecdote::createAnecdote($them,$title,$anecdote);
     }
-
-    public  function getAnecdoteListForm($start_from,$record_per_page)
+    public function actionAddAnecdoteToTop($anecdoteId)
     {
-        return $this->getAnecdoteList($start_from,$record_per_page);
+        Anecdote::addToTop($anecdoteId);
+    }
+//    public function add()
+//    {
+//        echo 'qweqwqweqwewe';
+//    }
+
+    public static function getAnecdoteListForm($start_from,$record_per_page)
+    {
+        return Anecdote::getAnecdoteList($start_from,$record_per_page);
+    }
+    public static function getAnecdoteListAdmin()
+    {
+        return Anecdote::getAnecdoteListAdmin();
     }
 //    public  function getApprovedAnecdotes()
 //    {
 //        return $this->getAllAnecdotes();
 //    }
-    public  function getTotalAnecdotes()
+    public function getTotalAnecdotes()
     {
-        return $this->getTotalAnecdote();
-
-    }public  function getLastAnecdote($userId)
+        return Anecdote::getTotalAnecdote();
+    }
+    public function getLastAnecdote($userId)
     {
-        return $this->getLastUserAnecdote($userId);
+        return Anecdote::getLastUserAnecdote($userId);
+    }
+    public function getCurrentAnecdote($Id)
+    {
+        return Anecdote::getCurrentAnecdote($Id);
     }
 
 //    public  function getApprovedAnecdoteListForm()

@@ -80,6 +80,12 @@
                             <a class="text"><?php echo ucfirst($anecdote['login']) ?></a>
                                 on <?php echo $anecdote['date'] ?>
                         </p>
+                        <?php if(isset($_SESSION['user'])) :?>
+                            <?php if($anecdote['user_id'] == $_SESSION['user']['id']) : ?>
+                                <a class="btn btn-primary" href="?action=top&id=<?php echo $anecdote['id']?>">Додати в топ</a>
+<!--                                <input type="submit" name="do_top" class="btn btn-primary" value="Додати в топ">-->
+                            <?php endif; ?>
+                        <?php endif;?>
                     </div>
                     <div class="like" data-id="<?php echo $anecdote['id']?>">
                         <span class="counter" id="like">

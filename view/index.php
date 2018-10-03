@@ -40,7 +40,7 @@ if(!isset($_GET['page'])) {
 require_once 'parts/navigation.php';
 
 if(isset($_GET['page']) && $_GET['page']=='check_posts') {
-    $anecdoteList = $anecdote->getAnecdoteListAdmin();
+    $anecdoteList = $anecdote::getAnecdoteListAdmin();
     if (isset($_SESSION['user'])){
         $userRole = $user::getUser($_SESSION['user']['name']);
     }
@@ -95,6 +95,10 @@ if(isset($_GET['action']) && $_GET['action']=='delete') {
     $admin->deleteAnecdote($_GET['id']);
     $user->page_redirect('?page=check_posts');
 }
+if(isset($_GET['action']) && $_GET['action']=='top') {
+    $obj = new AnecdoteController();
+    $obj->actionAddAnecdoteToTop($_GET['id']);
+}
 
 if(isset($_POST['form_registration'])) {
     $user::checkLoginExists($_POST['login'],$_POST['password']);
@@ -121,7 +125,7 @@ if(isset($_POST['form_anecdote'])) {
     //var_dump($now);
 
     if(strtotime($date)<strtotime($now)){
-        $anecdote->createAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
+        $anecdote->actionCreateAnecdote($_POST['them'],$_POST['title'],$_POST['anecdote']);
         echo 'Ваш запит додано';
     } else {
         echo 'Анекдот можна ддавати кожних 5 хвилин';

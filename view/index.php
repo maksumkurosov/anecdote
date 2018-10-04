@@ -23,8 +23,8 @@ $pagination = new Pagination($total , $page ,$limit, '?page_number=');
 require_once 'parts/head.php';
 
 if(!isset($_GET['page'])) {
+    $list = $anecdote->getTop();
     if (!isset($_GET['page_number'])||$_GET['page_number']==1){
-//        $approvedList = $anecdote->getApprovedAnecdotes();
         $anecdoteList = $anecdote->getAnecdoteListForm(0, $limit);
     } else{
         $anecdoteList = $anecdote->getAnecdoteListForm($_GET['page_number']*$limit-$limit, $limit);
@@ -34,7 +34,6 @@ if(!isset($_GET['page'])) {
     }
     require_once 'site.php';
     echo $pagination->get();
-
 }
 
 require_once 'parts/navigation.php';
@@ -97,7 +96,35 @@ if(isset($_GET['action']) && $_GET['action']=='delete') {
 }
 if(isset($_GET['action']) && $_GET['action']=='top') {
     $obj = new AnecdoteController();
-    $obj->actionAddAnecdoteToTop($_GET['id']);
+    $list = $obj->checkAnecdoteInTop($_GET['id']);
+    $currentAn = $obj->getCurrentAnecdote($_GET['id']);
+    if($list == false) {
+        if($_SESSION['user']['id']==$currentAn['user_id']){
+            $obj->delFromTop($_GET['id']);
+            $obj->actionAddAnecdoteToTop($_GET['id']);
+            echo 'Вашe оголошення додано в топ';
+        }
+    } else {
+        $date = new DateTime($list['time']);
+        $date->add(new DateInterval('PT10M'));
+        $date = date_format($date,"Y-m-d H:i:s");
+
+        $now = new DateTime();
+        $now = date("Y-m-d H:i:s");
+
+        if(strtotime($date)<strtotime($now)){
+            if($_SESSION['user']['id']==$currentAn['user_id']) {
+                $obj->delFromTop($_GET['id']);
+                $obj->actionAddAnecdoteToTop($_GET['id']);
+                echo 'Вашe оголошення додано в топ';
+            } else {
+                echo 'Ви не можете додавати чужі записи в топ';
+            }
+        } else {
+            echo 'Анекдот можна ддавати в топ кожних 10 хвилин';
+        }
+    }
+
 }
 
 if(isset($_POST['form_registration'])) {

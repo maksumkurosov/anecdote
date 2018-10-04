@@ -32,11 +32,12 @@ class Anecdote
     public static function getAnecdoteList($start_from,$record_per_page)
     {
         $db = Db::getConnection();
-        $result = $db->query("SELECT anecdote.*, user.login
+        $result = $db->query("SELECT anecdote.*, user.login, top.time
         FROM anecdote
         INNER JOIN user ON anecdote.user_id = user.id
+        LEFT JOIN top ON anecdote.id = top.id_anecdote
         WHERE status = 'posted'
-        order by id ASC LIMIT $start_from,$record_per_page ");
+        order by top.time DESC LIMIT $start_from,$record_per_page ");
 
 //        $query = "SELECT * FROM tbl_student order by student_id DESC LIMIT $start_from, $record_per_page";
         $advertisementList = array();
@@ -156,6 +157,57 @@ class Anecdote
         $result = $db->prepare($sql);
         $result->bindParam(':id_anecdote', $idAnecdote, PDO::PARAM_INT);
         return $result->execute();
+    }
+
+    public static function getLastTopAnecdote($id)
+    {
+        $db = Db::getConnection();
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM top WHERE id_anecdote = :id ORDER BY time DESC';
+
+        // Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Выполняем запрос
+        $result->execute();
+
+        // Возвращаем данные
+        return $result->fetch();
+    }
+
+    public static function getTopList()
+    {
+        $db = Db::getConnection();
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM top ORDER BY time DESC';
+
+        // Используется подготовленный запрос
+        $result = $db->prepare($sql);
+
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Выполняем запрос
+        $result->execute();
+
+        $list = array();
+        while ($row = $result->fetch()) {
+            $list[$row['id']] = $row;
+        }
+        return $list;
+    }
+
+    public static function deleteFromTop($id_anecdote)
+    {
+        $db = Db::getConnection();
+
+        $sql = "DELETE FROM top WHERE id_anecdote = ".$id_anecdote;
+
+        return $db->query($sql);
     }
 
 }

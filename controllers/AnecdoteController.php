@@ -34,9 +34,21 @@ class AnecdoteController
     {
         return Anecdote::getLastUserAnecdote($userId);
     }
-    public function getCurrentAnecdote($Id)
+    public function getCurrentAnecdote($id)
     {
-        return Anecdote::getCurrentAnecdote($Id);
+        return Anecdote::getCurrentAnecdote($id);
+    }
+    public function checkAnecdoteInTop($id)
+    {
+        return Anecdote::getLastTopAnecdote($id);
+    }
+    public function getTop()
+    {
+        return Anecdote::getTopList();
+    }
+    public function delFromTop($anecdoteId)
+    {
+        return Anecdote::deleteFromTop($anecdoteId);
     }
 
 //    public  function getApprovedAnecdoteListForm()
